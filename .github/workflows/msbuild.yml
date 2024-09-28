@@ -61,7 +61,7 @@ jobs:
           msbuild -m -p:Configuration=${{env.BUILD_CONFIGURATION}} -p:Platform=x64 ${{env.SOLUTION_FILE_PATH}}
 
       - name: Archive Artifacts
-        uses : actions/upload_artifact@v4
+        uses : actions/upload-artifact@v4
         with:
           name: mhw-cs-plugin-loader-${{env.BUILD_CONFIGURATION}}
           path: d:\a\SharpPluginLoader\SharpPluginLoader\x64\${{env.BUILD_CONFIGURATION}}\*
