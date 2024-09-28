@@ -64,11 +64,9 @@ jobs:
         working-directory: ${{env.GITHUB_WORKSPACE}}
         run: |
           mkdir .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
-          cp .\Assets\Default.bin .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
-          cp .\SharpPluginLoader.Bootstrapper\bin\${{env.BUILD_CONFIGURATION}}\net8.0\SharpPluginLoader.Bootstrapper.dll .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
-          cp .\SharpPluginLoader.Core\bin\${{env.BUILD_CONFIGURATION}}\net8.0\SharpPluginLoader.Core.dll .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
-          cp .\mhw-cs-plugin-loader\SharpPluginLoader.runtimeconfig.json .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
-          cp .\x64\${{env.BUILD_CONFIGURATION}}\mhw-cs-plugin-loader.dll .\${{env.BUILD_CONFIGURATION}}_Artifacts\msvcrt.dll
+          copy .\Assets\Default.bin .\SharpPluginLoader.Bootstrapper\bin\${{env.BUILD_CONFIGURATION}}\net8.0\SharpPluginLoader.Bootstrapper.dll .\SharpPluginLoader.Core\bin\${{env.BUILD_CONFIGURATION}}\net8.0\SharpPluginLoader.Core.dll .\mhw-cs-plugin-loader\SharpPluginLoader.runtimeconfig.json .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader\
+          copy .\x64\${{env.BUILD_CONFIGURATION}}\mhw-cs-plugin-loader.dll .\${{env.BUILD_CONFIGURATION}}_Artifacts\
+          ren .\${{env.BUILD_CONFIGURATION}}_Artifacts\mhw-cs-plugin-loader.dll msvcrt.dll
 
       - name: Archive Artifacts
         uses : actions/upload-artifact@v4
