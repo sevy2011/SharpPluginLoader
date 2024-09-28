@@ -60,11 +60,21 @@ jobs:
         run: |
           msbuild -m -p:Configuration=${{env.BUILD_CONFIGURATION}} -p:Platform=x64 ${{env.SOLUTION_FILE_PATH}}
 
+      - name: Prepare Artifacts
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: |
+          mkdir .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
+          cp .\Assets\Default.bin .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
+          cp .\SharpPluginLoader.Bootstrapper\bin\${{env.BUILD_CONFIGURATION}}\net8.0\SharpPluginLoader.Bootstrapper.dll .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
+          cp .\SharpPluginLoader.Core\bin\${{env.BUILD_CONFIGURATION}}\net8.0\SharpPluginLoader.Core.dll .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
+          cp .\mhw-cs-plugin-loader\SharpPluginLoader.runtimeconfig.json .\${{env.BUILD_CONFIGURATION}}_Artifacts\nativePC\plugins\CSharp\Loader
+          cp .\x64\${{env.BUILD_CONFIGURATION}}\mhw-cs-plugin-loader.dll .\${{env.BUILD_CONFIGURATION}}_Artifacts\msvcrt.dll
+
       - name: Archive Artifacts
         uses : actions/upload-artifact@v4
         with:
-          name: mhw-cs-plugin-loader-${{env.BUILD_CONFIGURATION}}
-          path: d:\a\SharpPluginLoader\*
+          name: SharpPluginLoader-${{env.BUILD_CONFIGURATION}}
+          path: d:\a\SharpPluginLoader\${{env.BUILD_CONFIGURATION}}_Artifacts\*
           overwrite: true
           if-no-files-found: error
 
